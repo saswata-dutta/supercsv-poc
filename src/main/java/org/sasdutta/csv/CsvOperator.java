@@ -1,10 +1,13 @@
 package org.sasdutta.csv;
 
-import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 public interface CsvOperator<T> {
-  List<String> expectedColumns();
+  Map<String, String> expectedColumns();
+
   String[] neptuneColumns();
+
   Class<T> csvBean();
+
+  String neptuneLine(T line);
 }

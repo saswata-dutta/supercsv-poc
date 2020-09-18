@@ -2,7 +2,7 @@ package org.sasdutta.csv;
 
 public class EntityLine {
   private String id;
-  private String type;
+  private String label;
 
   public String getId() {
     return id;
@@ -12,19 +12,11 @@ public class EntityLine {
     this.id = id;
   }
 
-  public String getType() {
-    return type;
+  public String getLabel() {
+    return label;
   }
 
-  public void setType(String type) {
-    this.type = type;
-  }
-
-  @Override
-  public String toString() {
-    return "EntityLine{" +
-        "id='" + id + '\'' +
-        ", type='" + type + '\'' +
-        '}';
+  public void setLabel(String label) {
+    this.label = label;
   }
 }

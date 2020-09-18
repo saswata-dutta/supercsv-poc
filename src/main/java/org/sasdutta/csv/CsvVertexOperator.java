@@ -1,17 +1,37 @@
 package org.sasdutta.csv;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class CsvVertexOperator implements CsvOperator<EntityLine> {
-  private static final List<String> inputHeader = Arrays.asList(
-      "id",
-      "type"
-  );
+
+  private final String clientApp;
+  private final String businessLine;
+  private final String createdBy;
+  private final Long createdAt;
+
+  public CsvVertexOperator(String clientApp, String businessLine, String createdBy, long createdAt) {
+    this.clientApp = clientApp;
+    this.businessLine = businessLine;
+    this.createdBy = createdBy;
+    this.createdAt = createdAt;
+  }
+
+  private static final Map<String, String> columnMap;
+
+  static {
+    Map<String, String> map = new HashMap<>();
+    // input col -> bean field
+    map.put("Entity-id", "id");
+    map.put("Entity-type", "label");
+
+    columnMap = Collections.unmodifiableMap(map);
+  }
 
   @Override
-  public List<String> expectedColumns() {
-    return inputHeader;
+  public Map<String, String> expectedColumns() {
+    return columnMap;
   }
 
   private static final String[] neptuneHeader = {
@@ -29,5 +49,11 @@ public final class CsvVertexOperator implements CsvOperator<EntityLine> {
   @Override
   public Class<EntityLine> csvBean() {
     return EntityLine.class;
+  }
+
+  @Override
+  public String neptuneLine(EntityLine line) {
+    // todo validate and namesapce
+    return String.join(",", line.getId(), line.getLabel(), createdBy, createdAt.toString());
   }
 }

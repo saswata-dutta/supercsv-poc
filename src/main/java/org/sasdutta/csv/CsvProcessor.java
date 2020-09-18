@@ -7,7 +7,7 @@ import org.supercsv.io.ICsvBeanReader;
 import org.supercsv.prefs.CsvPreference;
 
 import java.io.StringReader;
-import java.util.List;
+import java.util.Map;
 
 public class CsvProcessor {
   private static final CellProcessor nonSpaceWord = new StrRegEx("[-\\w]+");
@@ -15,10 +15,11 @@ public class CsvProcessor {
   /**
    * Transform client csv into Neptune Bulk loader format
    *
-   * @param data
-   * @return
+   * @param data     the client csv
+   * @param operator the strategy to generate the corresponding Neptune format for bulk loading
+   * @return lines of csv to be uploaded to neptune via the bulk loader
    */
-  public static String transform(String data, CsvOperator operator) {
+  public static <T> String transform(String data, CsvOperator<T> operator) {
 
     StringBuilder result = new StringBuilder();
     try (ICsvBeanReader beanReader = new CsvBeanReader(new StringReader(data), CsvPreference.STANDARD_PREFERENCE)) {
@@ -27,11 +28,11 @@ public class CsvProcessor {
       result.append(String.join(",", operator.neptuneColumns()));
       result.append("\n");
 
-      final CellProcessor[] cellProcessors = initCellProcessors(headerColumns, operator.expectedColumns());
+      final CellProcessor[] cellProcessors = selectExpectedColumns(headerColumns, operator.expectedColumns());
 
-      Object line;
+      T line;
       while ((line = beanReader.read(operator.csvBean(), headerColumns, cellProcessors)) != null) {
-        result.append(line.toString());
+        result.append(operator.neptuneLine(line));
         result.append("\n");
       }
     } catch (Exception ex) {
@@ -41,22 +42,35 @@ public class CsvProcessor {
     return result.toString();
   }
 
-  private static CellProcessor[] initCellProcessors(String[] inputColumns, List<String> expectedColumns) {
+  /**
+   * Identifies the columns to process from client csv,
+   * nulls out extra ones so error in those shouldn't affect processing
+   *
+   * @param inputColumns
+   * @param expectedColumns
+   * @return
+   */
+  private static CellProcessor[] selectExpectedColumns(String[] inputColumns, Map<String, String> expectedColumns) {
+    final String[] originalCols = inputColumns.clone();
     final CellProcessor[] cellProcessors = new CellProcessor[inputColumns.length];
 
     int matchCount = 0;
     for (int i = 0; i < inputColumns.length; i++) {
-      if (expectedColumns.contains(inputColumns[i])) {
+
+      if (expectedColumns.containsKey(inputColumns[i])) {
         cellProcessors[i] = nonSpaceWord;
+        inputColumns[i] = expectedColumns.get(inputColumns[i]);
         ++matchCount;
       } else {
+        // ignoring surplus cols
         cellProcessors[i] = null;
+        inputColumns[i] = null;
       }
     }
 
     if (matchCount != expectedColumns.size())
-      throw new IllegalArgumentException("Header must contain columns : " + expectedColumns +
-          "\t found : " + String.join(",", inputColumns));
+      throw new IllegalArgumentException("Header must contain columns : " + expectedColumns.keySet() +
+          "\t but found : " + String.join(",", originalCols));
 
     return cellProcessors;
   }

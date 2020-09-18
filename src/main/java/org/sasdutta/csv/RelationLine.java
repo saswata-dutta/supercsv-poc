@@ -1,27 +1,27 @@
 package org.sasdutta.csv;
 
 public class RelationLine {
-  private String type;
-  private String fromType;
+  private String label;
+  private String fromLabel;
   private String fromId;
-  private String toType;
+  private String toLabel;
   private String toId;
   private String confidence;
 
-  public String getType() {
-    return type;
+  public String getLabel() {
+    return label;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setLabel(String label) {
+    this.label = label;
   }
 
-  public String getFromType() {
-    return fromType;
+  public String getFromLabel() {
+    return fromLabel;
   }
 
-  public void setFromType(String fromType) {
-    this.fromType = fromType;
+  public void setFromLabel(String fromLabel) {
+    this.fromLabel = fromLabel;
   }
 
   public String getFromId() {
@@ -32,12 +32,12 @@ public class RelationLine {
     this.fromId = fromId;
   }
 
-  public String getToType() {
-    return toType;
+  public String getToLabel() {
+    return toLabel;
   }
 
-  public void setToType(String toType) {
-    this.toType = toType;
+  public void setToLabel(String toLabel) {
+    this.toLabel = toLabel;
   }
 
   public String getToId() {
@@ -65,6 +65,6 @@ public class RelationLine {
       }
     }
 
-    throw new IllegalArgumentException("Bad Confidence value " + confidence);
+    throw new IllegalArgumentException("Bad Confidence value: " + confidence);
   }
 }

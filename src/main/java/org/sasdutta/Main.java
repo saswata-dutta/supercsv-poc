@@ -10,12 +10,15 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Instant;
 
 public class Main {
   public static void main(String[] args) throws Exception {
     String input = args[0];
     String data = readFile(input, StandardCharsets.UTF_8);
-    CsvOperator<EntityLine> vertexOp = new CsvVertexOperator();
+    CsvOperator<EntityLine> vertexOp = new CsvVertexOperator("cwb", "aws", "sasdutta",
+        Instant.now().toEpochMilli());
+
     System.out.println(CsvProcessor.transform(data, vertexOp));
   }
 
