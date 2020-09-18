@@ -1,56 +1,24 @@
 package org.sasdutta.csv;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class RelationLine {
+  @NonNull
   private String label;
+  @NonNull
   private String fromLabel;
+  @NonNull
   private String fromId;
+  @NonNull
   private String toLabel;
+  @NonNull
   private String toId;
+  @NonNull
   private String confidence;
-
-  public String getLabel() {
-    return label;
-  }
-
-  public void setLabel(String label) {
-    this.label = label;
-  }
-
-  public String getFromLabel() {
-    return fromLabel;
-  }
-
-  public void setFromLabel(String fromLabel) {
-    this.fromLabel = fromLabel;
-  }
-
-  public String getFromId() {
-    return fromId;
-  }
-
-  public void setFromId(String fromId) {
-    this.fromId = fromId;
-  }
-
-  public String getToLabel() {
-    return toLabel;
-  }
-
-  public void setToLabel(String toLabel) {
-    this.toLabel = toLabel;
-  }
-
-  public String getToId() {
-    return toId;
-  }
-
-  public void setToId(String toId) {
-    this.toId = toId;
-  }
-
-  public String getConfidence() {
-    return confidence;
-  }
 
   private static final String[] confidenceValues = {
       "GROUND_TRUTH", "AUTO", "MANUAL",

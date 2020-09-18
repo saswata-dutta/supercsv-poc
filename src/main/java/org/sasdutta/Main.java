@@ -17,7 +17,7 @@ public class Main {
     String input = args[0];
     String data = readFile(input, StandardCharsets.UTF_8);
     CsvOperator<EntityLine> vertexOp = new CsvVertexOperator("cwb", "aws", "sasdutta",
-        Instant.now().toEpochMilli());
+        Instant.now().toEpochMilli(), new TruthyClientOperationValidator());
 
     System.out.println(CsvProcessor.transform(data, vertexOp));
   }

@@ -2,6 +2,7 @@ package org.sasdutta.csv;
 
 import org.supercsv.cellprocessor.constraint.StrRegEx;
 import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.exception.SuperCsvException;
 import org.supercsv.io.CsvBeanReader;
 import org.supercsv.io.ICsvBeanReader;
 import org.supercsv.prefs.CsvPreference;
@@ -35,8 +36,11 @@ public class CsvProcessor {
         result.append(operator.neptuneLine(line));
         result.append("\n");
       }
+    } catch (SuperCsvException ex) {
+      String message = String.format("Failed to parse csv: %s\n at:\n%s", ex.getMessage(), ex.getCsvContext());
+      throw new IllegalArgumentException(message, ex);
     } catch (Exception ex) {
-      throw new IllegalArgumentException("Failed to process input csv", ex);
+      throw new IllegalArgumentException("Failed to process csv", ex);
     }
 
     return result.toString();
