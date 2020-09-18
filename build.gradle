@@ -1,0 +1,48 @@
+plugins {
+    id 'application'
+}
+
+group 'org.sasdutta'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+application {
+    mainClass = 'org.sasdutta.Main'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+dependencies {
+    implementation("net.sf.supercsv:super-csv:2.4.0")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+}
+
+task printGradleHome {
+    doLast {
+        println gradle.gradleHomeDir
+    }
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes "Main-Class": application.getMainClass()
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
