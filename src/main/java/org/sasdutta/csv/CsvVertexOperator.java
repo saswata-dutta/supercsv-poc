@@ -1,6 +1,7 @@
 package org.sasdutta.csv;
 
 import org.sasdutta.ClientOperationValidator;
+import org.sasdutta.NameSpaceCodec;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,14 +13,20 @@ public final class CsvVertexOperator implements CsvOperator<EntityLine> {
   private final String businessLine;
   private final String createdBy;
   private final Long createdAt;
-  private final ClientOperationValidator validator;
+  private final ClientOperationValidator operationValidator;
+  private final NameSpaceCodec nameSpaceCodec;
 
-  public CsvVertexOperator(String clientApp, String businessLine, String createdBy, Long createdAt, ClientOperationValidator validator) {
+  public CsvVertexOperator(String clientApp, String businessLine,
+                           String createdBy, Long createdAt,
+                           ClientOperationValidator operationValidator,
+                           NameSpaceCodec nameSpaceCodec
+  ) {
     this.clientApp = clientApp;
     this.businessLine = businessLine;
     this.createdBy = createdBy;
     this.createdAt = createdAt;
-    this.validator = validator;
+    this.operationValidator = operationValidator;
+    this.nameSpaceCodec = nameSpaceCodec;
   }
 
   private static final Map<String, String> columnMap;
@@ -57,9 +64,11 @@ public final class CsvVertexOperator implements CsvOperator<EntityLine> {
 
   @Override
   public String neptuneLine(EntityLine line) {
-    if (validator.canWriteVertex(clientApp, businessLine, line.getLabel())) {
-      // todo namespace
-      return String.join(",", line.getId(), line.getLabel(), createdBy, createdAt.toString());
+    if (operationValidator.canWriteVertex(clientApp, businessLine, line.getLabel())) {
+      String id = nameSpaceCodec.encodeVertexId(clientApp, businessLine, line.getLabel(), line.getId());
+      String label = nameSpaceCodec.encodeVertexLabel(clientApp, businessLine, line.getLabel());
+
+      return String.join(",", id, label, createdBy, createdAt.toString());
     } else {
       String message = String.format("Client application '%s' is not authorised to create vertex with label '%s' in business line '%s'",
           clientApp, line.getLabel(), businessLine);
