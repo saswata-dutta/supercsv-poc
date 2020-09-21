@@ -16,7 +16,7 @@ public class Main {
   public static void main(String[] args) throws Exception {
     String input = args[0];
     String data = readFile(input, StandardCharsets.UTF_8);
-    ClientOperationValidator operationValidator = new TruthyClientOperationValidator();
+    ClientOperationValidator operationValidator = new DummyOperationValidator();
     NameSpaceCodec nameSpaceCodec = new DefaultNameSpaceCodec(operationValidator);
 
     CsvOperator<EntityLine> vertexOp = new CsvVertexOperator("cwb", "aws", "sasdutta",

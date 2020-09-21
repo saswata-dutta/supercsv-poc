@@ -19,8 +19,7 @@ public final class CsvVertexOperator implements CsvOperator<EntityLine> {
   public CsvVertexOperator(String clientApp, String businessLine,
                            String createdBy, Long createdAt,
                            ClientOperationValidator operationValidator,
-                           NameSpaceCodec nameSpaceCodec
-  ) {
+                           NameSpaceCodec nameSpaceCodec) {
     this.clientApp = clientApp;
     this.businessLine = businessLine;
     this.createdBy = createdBy;
