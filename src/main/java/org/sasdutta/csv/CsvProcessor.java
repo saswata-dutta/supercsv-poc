@@ -1,5 +1,6 @@
 package org.sasdutta.csv;
 
+import lombok.experimental.UtilityClass;
 import org.supercsv.cellprocessor.constraint.StrRegEx;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvException;
@@ -7,10 +8,14 @@ import org.supercsv.io.CsvBeanReader;
 import org.supercsv.io.ICsvBeanReader;
 import org.supercsv.prefs.CsvPreference;
 
+import java.io.IOException;
 import java.io.StringReader;
+import java.util.Arrays;
 import java.util.Map;
 
+@UtilityClass
 public class CsvProcessor {
+
   private static final CellProcessor nonSpaceWord = new StrRegEx("[-\\w]+");
 
   /**
@@ -36,11 +41,13 @@ public class CsvProcessor {
         result.append(operator.neptuneLine(line));
         result.append("\n");
       }
+    } catch (IllegalArgumentException ex) {
+      throw ex;
     } catch (SuperCsvException ex) {
       String message = String.format("Failed to parse csv: %s\n at:\n%s", ex.getMessage(), ex.getCsvContext());
       throw new IllegalArgumentException(message, ex);
-    } catch (Exception ex) {
-      throw new IllegalArgumentException("Failed to process csv", ex);
+    } catch (IOException ex) {
+      throw new IllegalArgumentException("Failed to read csv", ex);
     }
 
     return result.toString();
@@ -72,9 +79,11 @@ public class CsvProcessor {
       }
     }
 
-    if (matchCount != expectedColumns.size())
-      throw new IllegalArgumentException("Header must contain columns : " + expectedColumns.keySet() +
-          "\t but found : " + String.join(",", originalCols));
+    if (matchCount != expectedColumns.size()) {
+      String message = String.format("Expected header to contain columns: %s but found: %s",
+          expectedColumns.keySet(), Arrays.toString(originalCols));
+      throw new IllegalArgumentException(message);
+    }
 
     return cellProcessors;
   }

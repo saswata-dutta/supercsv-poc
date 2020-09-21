@@ -1,10 +1,5 @@
 package org.sasdutta;
 
-import org.sasdutta.csv.CsvOperator;
-import org.sasdutta.csv.CsvProcessor;
-import org.sasdutta.csv.CsvVertexOperator;
-import org.sasdutta.csv.EntityLine;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -18,11 +13,12 @@ public class Main {
     String data = readFile(input, StandardCharsets.UTF_8);
     ClientOperationValidator operationValidator = new DummyOperationValidator();
     NameSpaceCodec nameSpaceCodec = new DefaultNameSpaceCodec(operationValidator);
+    BulkOperationsComponent service = new BulkOperationsComponent(operationValidator, nameSpaceCodec);
 
-    CsvOperator<EntityLine> vertexOp = new CsvVertexOperator("cwb", "aws", "sasdutta",
-        Instant.now().toEpochMilli(), operationValidator, nameSpaceCodec);
+    String vtxResult = service.parseVertices("cwb", "aws", "sasdutta",
+        Instant.now().toEpochMilli(), data);
 
-    System.out.println(CsvProcessor.transform(data, vertexOp));
+    System.out.println(vtxResult);
   }
 
   static String readFile(String path, Charset encoding)
