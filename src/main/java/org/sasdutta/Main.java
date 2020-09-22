@@ -13,7 +13,7 @@ public class Main {
     String data = readFile(input, StandardCharsets.UTF_8);
     ClientOperationValidator operationValidator = new DummyOperationValidator();
     NameSpaceCodec nameSpaceCodec = new DefaultNameSpaceCodec(operationValidator);
-    BulkOperationsComponent service = new BulkOperationsComponent(operationValidator, nameSpaceCodec);
+    BulkOperationsComponent service = new BulkOperationsComponent(operationValidator, nameSpaceCodec, null);
 
     String vtxResult = service.parseVertices("cwb", "aws", "sasdutta",
         Instant.now().toEpochMilli(), data);
