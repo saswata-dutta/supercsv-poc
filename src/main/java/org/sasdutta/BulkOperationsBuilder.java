@@ -17,7 +17,7 @@ public class BulkOperationsBuilder {
   }
 
   public void bulkUpload(String clientApp, String businessLine,
-                         String createdBy, Long createdAt,
+                         String createdBy, Instant createdAt,
                          String vertices, String edges) {
     // adding a random id to prevent parallel calls from getting clobbered
     String id = idGenerator.generate();
@@ -29,10 +29,9 @@ public class BulkOperationsBuilder {
   private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
   private static String fileNameGenerator(String clientApp, String businessLine,
-                                          Long createdAt, String createdBy, String id) {
+                                          Instant createdAt, String createdBy, String id) {
 
-    Instant instant = Instant.ofEpochMilli(createdAt);
-    OffsetDateTime odt = instant.atOffset(ZoneOffset.UTC);
+    OffsetDateTime odt = createdAt.atOffset(ZoneOffset.UTC);
     String date = odt.format(formatter);
 
     return String.join("/", clientApp, businessLine, date, createdBy, id);

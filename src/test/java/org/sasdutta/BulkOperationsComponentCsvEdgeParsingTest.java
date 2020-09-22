@@ -3,6 +3,8 @@ package org.sasdutta;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,7 +19,7 @@ class BulkOperationsComponentCsvEdgeParsingTest {
   final String clientApp = "cwb";
   final String businessLine = "aws";
   final String createdBy = "sasdutta";
-  final long createdAt = 1600750765877L;
+  final Instant createdAt = Instant.ofEpochSecond(1600750765L);
 
 
   @Test
@@ -32,8 +34,8 @@ class BulkOperationsComponentCsvEdgeParsingTest {
 
     String expected =
         "~id,~label,~from,~to,Confidence:String(single),createdBy:String(single),createdAt:Long(single)\n" +
-            "cwb__aws__has_customer##aws__account$$123##cwb__aws__customer$$c1,cwb__aws__has_customer,aws__account$$123,cwb__aws__customer$$c1,MANUAL,sasdutta,1600750765877\n" +
-            "cwb__aws__has_customer##cwb__aws__customer$$c1##cwb__aws__customer$$c2,cwb__aws__has_customer,cwb__aws__customer$$c1,cwb__aws__customer$$c2,MANUAL,sasdutta,1600750765877\n";
+            "cwb__aws__has_customer##aws__account$$123##cwb__aws__customer$$c1,cwb__aws__has_customer,aws__account$$123,cwb__aws__customer$$c1,MANUAL,sasdutta,1600750765\n" +
+            "cwb__aws__has_customer##cwb__aws__customer$$c1##cwb__aws__customer$$c2,cwb__aws__has_customer,cwb__aws__customer$$c1,cwb__aws__customer$$c2,MANUAL,sasdutta,1600750765\n";
 
     assertEquals(expected, actual);
   }
@@ -50,8 +52,8 @@ class BulkOperationsComponentCsvEdgeParsingTest {
 
     String expected =
         "~id,~label,~from,~to,Confidence:String(single),createdBy:String(single),createdAt:Long(single)\n" +
-            "cwb__aws__has_customer##aws__account$$123##cwb__aws__customer$$c1,cwb__aws__has_customer,aws__account$$123,cwb__aws__customer$$c1,MANUAL,sasdutta,1600750765877\n" +
-            "cwb__aws__has_customer##cwb__aws__customer$$c1##cwb__aws__customer$$c2,cwb__aws__has_customer,cwb__aws__customer$$c1,cwb__aws__customer$$c2,MANUAL,sasdutta,1600750765877\n";
+            "cwb__aws__has_customer##aws__account$$123##cwb__aws__customer$$c1,cwb__aws__has_customer,aws__account$$123,cwb__aws__customer$$c1,MANUAL,sasdutta,1600750765\n" +
+            "cwb__aws__has_customer##cwb__aws__customer$$c1##cwb__aws__customer$$c2,cwb__aws__has_customer,cwb__aws__customer$$c1,cwb__aws__customer$$c2,MANUAL,sasdutta,1600750765\n";
 
     assertEquals(expected, actual);
   }
@@ -68,8 +70,8 @@ class BulkOperationsComponentCsvEdgeParsingTest {
 
     String expected =
         "~id,~label,~from,~to,Confidence:String(single),createdBy:String(single),createdAt:Long(single)\n" +
-            "cwb__aws__has_customer##aws__account$$123##cwb__aws__customer$$c1,cwb__aws__has_customer,aws__account$$123,cwb__aws__customer$$c1,MANUAL,sasdutta,1600750765877\n" +
-            "cwb__aws__has_customer##cwb__aws__customer$$c1##cwb__aws__customer$$c2,cwb__aws__has_customer,cwb__aws__customer$$c1,cwb__aws__customer$$c2,MANUAL,sasdutta,1600750765877\n";
+            "cwb__aws__has_customer##aws__account$$123##cwb__aws__customer$$c1,cwb__aws__has_customer,aws__account$$123,cwb__aws__customer$$c1,MANUAL,sasdutta,1600750765\n" +
+            "cwb__aws__has_customer##cwb__aws__customer$$c1##cwb__aws__customer$$c2,cwb__aws__has_customer,cwb__aws__customer$$c1,cwb__aws__customer$$c2,MANUAL,sasdutta,1600750765\n";
 
     assertEquals(expected, actual);
   }
@@ -86,8 +88,8 @@ class BulkOperationsComponentCsvEdgeParsingTest {
 
     String expected =
         "~id,~label,~from,~to,Confidence:String(single),createdBy:String(single),createdAt:Long(single)\n" +
-            "cwb__aws__has_customer##aws__account$$123##cwb__aws__customer$$c1,cwb__aws__has_customer,aws__account$$123,cwb__aws__customer$$c1,MANUAL,sasdutta,1600750765877\n" +
-            "cwb__aws__has_customer##cwb__aws__customer$$c1##cwb__aws__customer$$c2,cwb__aws__has_customer,cwb__aws__customer$$c1,cwb__aws__customer$$c2,MANUAL,sasdutta,1600750765877\n";
+            "cwb__aws__has_customer##aws__account$$123##cwb__aws__customer$$c1,cwb__aws__has_customer,aws__account$$123,cwb__aws__customer$$c1,MANUAL,sasdutta,1600750765\n" +
+            "cwb__aws__has_customer##cwb__aws__customer$$c1##cwb__aws__customer$$c2,cwb__aws__has_customer,cwb__aws__customer$$c1,cwb__aws__customer$$c2,MANUAL,sasdutta,1600750765\n";
 
     assertEquals(expected, actual);
   }

@@ -3,6 +3,8 @@ package org.sasdutta;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,7 +19,7 @@ class BulkOperationsComponentCsvVertexParsingTest {
   final String clientApp = "cwb";
   final String businessLine = "aws";
   final String createdBy = "sasdutta";
-  final long createdAt = 1600750765877L;
+  final Instant createdAt = Instant.ofEpochSecond(1600750765L);
 
 
   @Test
@@ -31,8 +33,8 @@ class BulkOperationsComponentCsvVertexParsingTest {
     String actual = bulkOperationsComponent.parseVertices(clientApp, businessLine, createdBy, createdAt, input);
 
     String expected = "~id,~label,createdBy:String(single),createdAt:Long(single)\n" +
-        "cwb__aws__customer$$123,cwb__aws__customer,sasdutta,1600750765877\n" +
-        "cwb__aws__customer$$345,cwb__aws__customer,sasdutta,1600750765877\n";
+        "cwb__aws__customer$$123,cwb__aws__customer,sasdutta,1600750765\n" +
+        "cwb__aws__customer$$345,cwb__aws__customer,sasdutta,1600750765\n";
 
     assertEquals(expected, actual);
   }
@@ -48,8 +50,8 @@ class BulkOperationsComponentCsvVertexParsingTest {
     String actual = bulkOperationsComponent.parseVertices(clientApp, businessLine, createdBy, createdAt, input);
 
     String expected = "~id,~label,createdBy:String(single),createdAt:Long(single)\n" +
-        "cwb__aws__customer$$123,cwb__aws__customer,sasdutta,1600750765877\n" +
-        "cwb__aws__customer$$345,cwb__aws__customer,sasdutta,1600750765877\n";
+        "cwb__aws__customer$$123,cwb__aws__customer,sasdutta,1600750765\n" +
+        "cwb__aws__customer$$345,cwb__aws__customer,sasdutta,1600750765\n";
 
     assertEquals(expected, actual);
   }
@@ -65,8 +67,8 @@ class BulkOperationsComponentCsvVertexParsingTest {
     String actual = bulkOperationsComponent.parseVertices(clientApp, businessLine, createdBy, createdAt, input);
 
     String expected = "~id,~label,createdBy:String(single),createdAt:Long(single)\n" +
-        "cwb__aws__customer$$123,cwb__aws__customer,sasdutta,1600750765877\n" +
-        "cwb__aws__customer$$345,cwb__aws__customer,sasdutta,1600750765877\n";
+        "cwb__aws__customer$$123,cwb__aws__customer,sasdutta,1600750765\n" +
+        "cwb__aws__customer$$345,cwb__aws__customer,sasdutta,1600750765\n";
 
     assertEquals(expected, actual);
   }
@@ -82,8 +84,8 @@ class BulkOperationsComponentCsvVertexParsingTest {
     String actual = bulkOperationsComponent.parseVertices(clientApp, businessLine, createdBy, createdAt, input);
 
     String expected = "~id,~label,createdBy:String(single),createdAt:Long(single)\n" +
-        "cwb__aws__customer$$123,cwb__aws__customer,sasdutta,1600750765877\n" +
-        "cwb__aws__customer$$345,cwb__aws__customer,sasdutta,1600750765877\n";
+        "cwb__aws__customer$$123,cwb__aws__customer,sasdutta,1600750765\n" +
+        "cwb__aws__customer$$345,cwb__aws__customer,sasdutta,1600750765\n";
 
     assertEquals(expected, actual);
   }

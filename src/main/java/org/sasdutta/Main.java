@@ -16,7 +16,7 @@ public class Main {
     BulkOperationsComponent service = new BulkOperationsComponent(operationValidator, nameSpaceCodec, null);
 
     String vtxResult = service.parseEdges("cwb", "aws", "sasdutta",
-        Instant.now().toEpochMilli(), data);
+        Instant.now(), data);
 
     System.out.println(vtxResult);
   }

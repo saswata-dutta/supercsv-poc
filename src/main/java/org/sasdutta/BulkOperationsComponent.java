@@ -7,6 +7,8 @@ import org.sasdutta.csv.CsvVertexOperator;
 import org.sasdutta.csv.EntityLine;
 import org.sasdutta.csv.RelationLine;
 
+import java.time.Instant;
+
 
 public class BulkOperationsComponent {
 
@@ -23,7 +25,7 @@ public class BulkOperationsComponent {
   }
 
   public void bulkCreate(String clientApp, String businessLine,
-                         String createdBy, Long createdAt,
+                         String createdBy, Instant createdAt,
                          String entities, String relations) {
 
     String parsedVertices = parseVertices(clientApp, businessLine, createdBy, createdAt, entities);
@@ -33,7 +35,7 @@ public class BulkOperationsComponent {
   }
 
   String parseEdges(String clientApp, String businessLine,
-                    String createdBy, Long createdAt,
+                    String createdBy, Instant createdAt,
                     String relations) {
 
     CsvOperator<RelationLine> edgeOp =
@@ -43,7 +45,7 @@ public class BulkOperationsComponent {
   }
 
   String parseVertices(String clientApp, String businessLine,
-                       String createdBy, Long createdAt,
+                       String createdBy, Instant createdAt,
                        String entities) {
 
     CsvOperator<EntityLine> vertexOp =

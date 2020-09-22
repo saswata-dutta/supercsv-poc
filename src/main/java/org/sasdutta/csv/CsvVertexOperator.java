@@ -3,6 +3,7 @@ package org.sasdutta.csv;
 import org.sasdutta.ClientOperationValidator;
 import org.sasdutta.NameSpaceCodec;
 
+import java.time.Instant;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,12 +13,12 @@ public final class CsvVertexOperator implements CsvOperator<EntityLine> {
   private final String clientApp;
   private final String businessLine;
   private final String createdBy;
-  private final Long createdAt;
+  private final Instant createdAt;
   private final ClientOperationValidator operationValidator;
   private final NameSpaceCodec nameSpaceCodec;
 
   public CsvVertexOperator(String clientApp, String businessLine,
-                           String createdBy, Long createdAt,
+                           String createdBy, Instant createdAt,
                            ClientOperationValidator operationValidator,
                            NameSpaceCodec nameSpaceCodec) {
     this.clientApp = clientApp;
@@ -66,8 +67,9 @@ public final class CsvVertexOperator implements CsvOperator<EntityLine> {
     if (operationValidator.canWriteVertex(clientApp, businessLine, line.getLabel())) {
       String id = nameSpaceCodec.encodeVertexId(clientApp, businessLine, line.getLabel(), line.getId());
       String label = nameSpaceCodec.encodeVertexLabel(clientApp, businessLine, line.getLabel());
+      String ts = String.valueOf(createdAt.getEpochSecond());
 
-      return String.join(",", id, label, createdBy, createdAt.toString());
+      return String.join(",", id, label, createdBy, ts);
     } else {
       String message = String.format("Client application '%s' is not authorised to create vertex with label '%s' in business line '%s'",
           clientApp, line.getLabel(), businessLine);
