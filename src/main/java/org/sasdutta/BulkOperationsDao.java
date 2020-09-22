@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.AmazonS3;
 public class BulkOperationsDao {
   private static final String bucket = "???"; // TODO read from config
   private static final String prefix = "bulk-csv/client-pushed";
+  private static final String dependencyJsonTemplate = "[\"%s\",\"%s\"]";
 
   private final AmazonS3 s3Client;
 
@@ -17,7 +18,7 @@ public class BulkOperationsDao {
     String edgesKey = String.join("/", prefix, path, "edges.csv");
 
     String ingestionOrderKey = String.join("/", prefix, path, "order.json");
-    String ingestionOrder = String.format("[ \"%s\", \"%s\" ]", verticesKey, edgesKey);
+    String ingestionOrder = String.format(dependencyJsonTemplate, verticesKey, edgesKey);
 
     s3Client.putObject(bucket, verticesKey, vertices);
     s3Client.putObject(bucket, edgesKey, edges);
