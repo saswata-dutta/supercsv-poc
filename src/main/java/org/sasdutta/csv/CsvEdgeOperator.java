@@ -74,7 +74,7 @@ public class CsvEdgeOperator implements CsvOperator<RelationLine> {
       String from = nameSpaceCodec.encodeVertexId(clientApp, businessLine, line.getFromLabel(), line.getFromId());
       String to = nameSpaceCodec.encodeVertexId(clientApp, businessLine, line.getToLabel(), line.getToId());
       String id = nameSpaceCodec.encodeEdgeId(clientApp, businessLine, line.getLabel(),
-          line.getFromLabel(), from, line.getToLabel(), to);
+          line.getFromLabel(), line.getFromId(), line.getToLabel(), line.getToId());
 
       return String.join(",", id, label, from, to, line.getConfidence(), createdBy, createdAt.toString());
     } else {

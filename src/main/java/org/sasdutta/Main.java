@@ -15,7 +15,7 @@ public class Main {
     NameSpaceCodec nameSpaceCodec = new DefaultNameSpaceCodec(operationValidator);
     BulkOperationsComponent service = new BulkOperationsComponent(operationValidator, nameSpaceCodec, null);
 
-    String vtxResult = service.parseVertices("cwb", "aws", "sasdutta",
+    String vtxResult = service.parseEdges("cwb", "aws", "sasdutta",
         Instant.now().toEpochMilli(), data);
 
     System.out.println(vtxResult);

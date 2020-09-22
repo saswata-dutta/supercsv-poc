@@ -100,7 +100,7 @@ class BulkOperationsComponentCsvVertexParsingTest {
         () -> bulkOperationsComponent.parseVertices(clientApp, businessLine, createdBy, createdAt, input));
 
     // check the erroneous row is reported
-    assertTrue(ex.getMessage().matches("(?s).*12 3,\\s+customer.*"));
+    assertTrue(ex.getMessage().matches("(?s).*12 3,\\s?customer.*"));
   }
 
   @Test
@@ -130,7 +130,7 @@ class BulkOperationsComponentCsvVertexParsingTest {
         () -> bulkOperationsComponent.parseVertices(clientApp, businessLine, createdBy, createdAt, input));
 
     // check the erroneous header is reported
-    assertTrue(ex.getMessage().matches("(?s).*Entity-id,\\s+Entity-x.*"));
+    assertTrue(ex.getMessage().matches("(?s).*Entity-id,\\s?Entity-x.*"));
   }
 
   @Test
@@ -146,5 +146,17 @@ class BulkOperationsComponentCsvVertexParsingTest {
 
     // check the erroneous column value is reported
     assertTrue(ex.getMessage().contains("'account'"));
+  }
+
+  @Test
+  @DisplayName("Should reject input entities csv which has unequal header and data columns")
+  void parseVertices_unequal_cols() {
+    String input =
+        "Entity-id,Entity-type,extra\n" +
+            "123,customer\n" +
+            "345,account";
+
+    assertThrows(IllegalArgumentException.class,
+        () -> bulkOperationsComponent.parseVertices(clientApp, businessLine, createdBy, createdAt, input));
   }
 }

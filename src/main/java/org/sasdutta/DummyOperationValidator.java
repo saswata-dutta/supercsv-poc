@@ -13,7 +13,7 @@ public class DummyOperationValidator implements ClientOperationValidator {
   private static final List<String> clientScopedVertices = writableVertices;
 
   private static final List<String> readableEdges = Collections.unmodifiableList(Arrays.asList("has_payer_account", "has_customer"));
-  private static final List<String> writableEdges = Collections.unmodifiableList(Arrays.asList("has_payer_account"));
+  private static final List<String> writableEdges = Collections.unmodifiableList(Arrays.asList("has_customer"));
   private static final List<String> clientScopedEdges = writableEdges;
 
   @Override
